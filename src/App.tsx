@@ -1,8 +1,28 @@
 import { useEffect, useState } from "react"
 import { listen } from "@tauri-apps/api/event"
 import { appWindow } from "@tauri-apps/api/window"
+import { invoke  } from "@tauri-apps/api/tauri"
+
 import Key from "./Key"
 import { controlKeyCodes, specialKeysObj } from "./config"
+
+appWindow.listen("tauri://close-requested", async (event) => {
+  // event.preventDefault(); // 阻止默认行为
+  await appWindow.hide(); // 隐藏窗口
+});
+
+// 创建托盘图标
+async function setupTray() {
+  await invoke("create_tray", {
+    iconPath: "icons/icon.ico", // 托盘图标路径
+    menuItems: [
+      {label: "Show Window", action: "show_window"}, // 显示窗口
+      {label: "Hide Window", action: "hide_window"}, // 隐藏窗口
+      {label: "Exit", action: "exit"}, // 退出程序
+    ]
+  })
+}
+setupTray()
 
 let controlPressed = false
 const controlKeys = ["ControlLeft", "ControlRight"]

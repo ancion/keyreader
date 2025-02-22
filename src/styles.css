@@ -34,10 +34,14 @@
 
 body {
   @apply flex items-center justify-center h-screen;
+  backdrop-filter: blur(20px);
 }
 
 .main-background {
-  background: rgba(0, 0, 0, 0.95);
+  background-color: rgba(20, 40, 90, 0.80);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
 .btn-close {
